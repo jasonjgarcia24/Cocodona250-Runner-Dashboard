@@ -43,15 +43,14 @@ test.describe('Cocodona 250 Runner Dashboard', () => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Aid Stations', exact: true }).click();
 
-    // Verify station rows appear - look for station buttons in the list
-    const stationButtons = page.locator('button').filter({ hasText: /mi \d/ });
-    await expect(stationButtons.first()).toBeVisible({ timeout: 5000 });
+    // Verify station list renders with station names
+    await expect(page.getByText('Cottonwood Creek')).toBeVisible({ timeout: 5000 });
 
-    // Click the first station to expand it
-    await stationButtons.first().click();
+    // Click the first station row to expand it
+    await page.getByText('Start Line').click();
 
-    // Verify expanded content appears (the detail section)
-    await expect(page.locator('text=Amenities').or(page.locator('text=amenities')).or(page.locator('text=Elevation')).or(page.locator('text=elevation'))).toBeVisible({ timeout: 5000 });
+    // Verify expanded content appears (My Plan button)
+    await expect(page.getByText('My Plan')).toBeVisible({ timeout: 5000 });
   });
 
   test('Schedule tab shows race schedule', async ({ page }) => {
