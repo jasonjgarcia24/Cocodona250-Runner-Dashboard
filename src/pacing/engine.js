@@ -261,7 +261,7 @@ export const calculatePacing = (runnerProfile = DEFAULT_RUNNER_PROFILE, plans = 
     const legDistance = section.distance || (station.mile - stations[i - 1].mile);
 
     // Current arrival estimate (for time-of-day calculation)
-    const prevDeparture = results[i - 1].departureTime;
+    const _prevDeparture = results[i - 1].departureTime;
     const elapsedHours = cumulativeMinutes / 60;
 
     // Estimate midpoint time to determine time-of-day and temperature
