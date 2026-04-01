@@ -28,7 +28,7 @@ npm run format:check  # Prettier check
 ```
 
 ### Migration from Artifact
-- Original single-file artifact preserved as `cocodona250.jsx` for reference
+- Original single-file artifact preserved in `docs/cocodona250.jsx` for reference
 - Entry point: `src/main.jsx` rendering `<App />`
 - Data constants moved to `src/data/`
 - Components split by tab/feature into `src/components/`
@@ -38,43 +38,49 @@ npm run format:check  # Prettier check
 ├── index.html
 ├── package.json
 ├── vite.config.js
+├── eslint.config.js
+├── .prettierrc
 ├── src/
 │   ├── main.jsx
 │   ├── App.jsx
+│   ├── tokens.js               # design tokens (T.*)
 │   ├── data/
 │   │   ├── aidStations.js
 │   │   ├── routeCoords.js
 │   │   ├── schedule.js
 │   │   ├── gear.js
-│   │   └── weather.js
+│   │   ├── weather.js
+│   │   └── terrain.js
 │   ├── components/
-│   │   ├── MapTab.jsx           # route map + elevation profile
+│   │   ├── MapTab.jsx           # Leaflet route map
 │   │   ├── ElevationProfile.jsx # zoomable elevation chart
 │   │   ├── RaceSummaryTab.jsx   # comprehensive aid station table
 │   │   ├── AidStationsTab.jsx
+│   │   ├── AidStationRow.jsx
+│   │   ├── AidStationDetail.jsx
+│   │   ├── PlanInputs.jsx
 │   │   ├── ScheduleTab.jsx
 │   │   ├── GearTab.jsx
 │   │   ├── RulesTab.jsx
 │   │   ├── CourseInfoTab.jsx
 │   │   ├── PacingTab.jsx
-│   │   ├── ImportData.jsx       # data import modal (stretch)
+│   │   ├── Card.jsx
 │   │   └── Icon.jsx
 │   ├── pacing/
 │   │   └── engine.js           # pacing multiplier logic
-│   ├── export/
-│   │   └── csvExport.js        # CSV generation and download
-│   ├── import/
-│   │   └── fileParser.js       # GPX/KML/CSV/JSON/PDF parsing
-│   └── tokens.js               # design tokens (T.*)
+│   └── export/
+│       └── csvExport.js        # CSV generation and download
 ├── tests/
 │   ├── unit/                   # Vitest unit tests
-│   ├── components/             # React Testing Library tests
-│   └── e2e/                    # Playwright end-to-end tests
-├── .eslintrc.cjs
-├── .prettierrc
-├── playwright.config.js
-├── cocodona250.jsx            # original artifact (reference)
+│   └── components/             # React Testing Library tests
+├── docs/                       # reference files (not source code)
+│   ├── cocodona250.jsx         # original artifact
+│   ├── Cocodona_250_-_2026.json
+│   ├── Cocodona 2026 Runner Guide.md
+│   ├── Cocodona 2026 Crew + Pacer Guide.md
+│   └── Section-Descriptions-250-Cocodona-2026-2.pdf
 ├── CLAUDE.md
+├── README.md
 └── REQUIREMENTS.md
 ```
 
