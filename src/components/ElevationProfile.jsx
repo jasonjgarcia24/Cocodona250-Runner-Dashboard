@@ -155,15 +155,22 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
     return { pathD: d, fillD: fill };
   }, [viewStart, viewEnd, mileToX, elevToY, chartH]);
 
-  // Dynamic Y-axis ticks
+  // Dynamic Y-axis ticks based on visible elevation range
   const yTicks = useMemo(() => {
+    const range = viewElevMax - viewElevMin;
+    let step;
+    if (range > 5000) step = 1000;
+    else if (range > 2500) step = 500;
+    else if (range > 1000) step = 250;
+    else step = 100;
+
     const ticks = [];
-    const roundedMax = Math.ceil(ELEV_MAX / 1000) * 1000;
-    for (let el = 2000; el <= roundedMax; el += 1000) {
-      if (el >= ELEV_MIN && el <= ELEV_MAX) ticks.push(el);
+    const first = Math.ceil(viewElevMin / step) * step;
+    for (let el = first; el <= viewElevMax; el += step) {
+      ticks.push(el);
     }
     return ticks;
-  }, []);
+  }, [viewElevMin, viewElevMax]);
 
   // Dynamic X-axis mile ticks based on zoom
   const xTicks = useMemo(() => {
