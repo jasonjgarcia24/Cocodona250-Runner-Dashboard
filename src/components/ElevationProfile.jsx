@@ -107,11 +107,11 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
     max = Math.max(max, startElev, endElev);
 
     const range = max - min;
-    const padding = Math.max(range * 0.15, 200);
+    const padding = Math.max(range * 0.12, 50);
 
     return {
-      viewElevMin: Math.floor((min - padding) / 100) * 100,
-      viewElevMax: Math.ceil((max + padding) / 100) * 100,
+      viewElevMin: Math.floor((min - padding) / 50) * 50,
+      viewElevMax: Math.ceil((max + padding) / 50) * 50,
     };
   }, [viewStart, viewEnd]);
 
