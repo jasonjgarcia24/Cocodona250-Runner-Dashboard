@@ -6,7 +6,7 @@ import {
   ELEV_MIN,
   ELEV_MAX,
 } from '../data/routeCoords';
-import { AID_STATIONS, STATION_COORDS } from '../data/aidStations';
+import { AID_STATIONS } from '../data/aidStations';
 
 /**
  * Interpolate elevation at a given mile marker from ELEV_PTS.
