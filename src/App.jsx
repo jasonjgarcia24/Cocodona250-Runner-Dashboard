@@ -1,6 +1,7 @@
 import { useState, useEffect } from 'react';
 import { T, TOPO_PATTERN, GRAIN } from './tokens';
 import { AID_STATIONS } from './data/aidStations';
+import { AidStationsTab } from './components/AidStationsTab';
 
 const TABS = ['Map', 'Aid Stations', 'Race Summary', 'Schedule', 'Required Gear', 'Key Rules', 'Course Info', 'Pacing'];
 
@@ -180,9 +181,18 @@ export default function App() {
           )}
 
           {activeTab === 'Aid Stations' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Aid Stations — coming in Phase 1
-            </div>
+            <AidStationsTab
+              plans={plans}
+              onPlanChange={handlePlanChange}
+              openIdx={openIdx}
+              onOpenIdx={setOpenIdx}
+              filter={filter}
+              onFilterChange={setFilter}
+              search={search}
+              onSearchChange={setSearch}
+              saveStatus={saveStatus}
+              filteredStations={filteredStations}
+            />
           )}
 
           {activeTab === 'Race Summary' && (
