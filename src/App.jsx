@@ -1,7 +1,8 @@
 import { useState, useEffect } from 'react';
 import { T, TOPO_PATTERN, GRAIN } from './tokens';
 import { AID_STATIONS } from './data/aidStations';
-import { AidStationsTab } from './components/AidStationsTab';
+import { MapTab } from './components/MapTab';
+import { ElevationProfile } from './components/ElevationProfile';
 
 const TABS = ['Map', 'Aid Stations', 'Race Summary', 'Schedule', 'Required Gear', 'Key Rules', 'Course Info', 'Pacing'];
 
@@ -175,24 +176,30 @@ export default function App() {
         {/* Tab content — placeholder panels until Phase 1 agents provide components */}
         <div className="min-h-[300px]">
           {activeTab === 'Map' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Map + Elevation Profile — coming in Phase 1
+            <div>
+              <MapTab
+                hoveredMile={hoveredMile}
+                onHoverMile={setHoveredMile}
+                onSelectStation={(i) => {
+                  setOpenIdx(i);
+                  setActiveTab('Aid Stations');
+                }}
+              />
+              <ElevationProfile
+                hoveredMile={hoveredMile}
+                onHoverMile={setHoveredMile}
+                onSelectStation={(i) => {
+                  setOpenIdx(i);
+                  setActiveTab('Aid Stations');
+                }}
+              />
             </div>
           )}
 
           {activeTab === 'Aid Stations' && (
-            <AidStationsTab
-              plans={plans}
-              onPlanChange={handlePlanChange}
-              openIdx={openIdx}
-              onOpenIdx={setOpenIdx}
-              filter={filter}
-              onFilterChange={setFilter}
-              search={search}
-              onSearchChange={setSearch}
-              saveStatus={saveStatus}
-              filteredStations={filteredStations}
-            />
+            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
+              Aid Stations — coming in Phase 1
+            </div>
           )}
 
           {activeTab === 'Race Summary' && (
