@@ -11,7 +11,8 @@
     "test:watch": "vitest",
     "test:e2e": "playwright test",
     "lint": "eslint src/",
-    "format:check": "prettier --check 'src/**/*.{js,jsx}'"
+    "format:check": "prettier --check 'src/**/*.{js,jsx}'",
+    "format:write": "prettier --write 'src/**/*.{js,jsx}'"
   },
   "dependencies": {
     "leaflet": "^1.9.4",
