@@ -87,8 +87,8 @@ export default function App() {
 
   return (
     <div
-      className="min-h-screen"
       style={{
+        minHeight: '100vh',
         background: T.bgPage,
         fontFamily: "'Georgia','Times New Roman',serif",
         color: T.textPrimary,
@@ -96,58 +96,135 @@ export default function App() {
     >
       {/* Topo pattern layer */}
       <div
-        className="fixed inset-0 pointer-events-none z-0"
-        style={{ backgroundImage: TOPO_PATTERN, backgroundSize: '400px', opacity: 1 }}
+        style={{
+          position: 'fixed',
+          top: 0, right: 0, bottom: 0, left: 0,
+          pointerEvents: 'none',
+          zIndex: 0,
+          backgroundImage: TOPO_PATTERN,
+          backgroundSize: '400px',
+          opacity: 1,
+        }}
       />
       {/* Grain layer */}
       <div
-        className="fixed inset-0 pointer-events-none z-0"
-        style={{ backgroundImage: GRAIN, backgroundSize: '200px', opacity: 0.04 }}
+        style={{
+          position: 'fixed',
+          top: 0, right: 0, bottom: 0, left: 0,
+          pointerEvents: 'none',
+          zIndex: 0,
+          backgroundImage: GRAIN,
+          backgroundSize: '200px',
+          opacity: 0.04,
+        }}
       />
 
-      <div className="relative z-10 max-w-3xl mx-auto px-4 py-6">
+      <div
+        style={{
+          position: 'relative',
+          zIndex: 10,
+          maxWidth: 960,
+          margin: '0 auto',
+          padding: '24px 16px',
+        }}
+      >
         {/* Header */}
-        <div className={`mb-8 transition-all duration-700 ${mounted ? 'opacity-100 translate-y-0' : 'opacity-0 translate-y-4'}`}>
-          <div className="flex items-start justify-between flex-wrap gap-4">
+        <div
+          style={{
+            marginBottom: 32,
+            transition: 'all 0.7s',
+            opacity: mounted ? 1 : 0,
+            transform: mounted ? 'translateY(0)' : 'translateY(16px)',
+          }}
+        >
+          <div
+            style={{
+              display: 'flex',
+              alignItems: 'flex-start',
+              justifyContent: 'space-between',
+              flexWrap: 'wrap',
+              gap: 16,
+            }}
+          >
             <div>
               <div
-                className="text-xs font-bold tracking-[0.3em] uppercase mb-1 font-sans"
-                style={{ color: T.accentLight }}
+                style={{
+                  fontSize: '0.75rem',
+                  fontWeight: 700,
+                  letterSpacing: '0.3em',
+                  textTransform: 'uppercase',
+                  marginBottom: 4,
+                  fontFamily: "'Inter', sans-serif",
+                  color: T.accentLight,
+                }}
               >
                 Aravaipa Running &middot; Arizona &middot; May 2026
               </div>
               <h1
-                className="text-5xl font-bold"
-                style={{ fontFamily: "'Georgia',serif", letterSpacing: '-0.02em', lineHeight: 1 }}
+                style={{
+                  fontSize: '3rem',
+                  fontWeight: 700,
+                  fontFamily: "'Georgia',serif",
+                  letterSpacing: '-0.02em',
+                  lineHeight: 1,
+                }}
               >
                 <span style={{ color: T.accentLight }}>Cocodona</span>{' '}
                 <span style={{ color: T.textPrimary }}>250</span>
               </h1>
-              <p className="text-sm mt-2 font-sans" style={{ color: T.textSecondary }}>
+              <p
+                style={{
+                  fontSize: '0.875rem',
+                  marginTop: 8,
+                  fontFamily: "'Inter', sans-serif",
+                  color: T.textSecondary,
+                }}
+              >
                 Black Canyon City &rarr; Flagstaff &middot;{' '}
-                <span style={{ color: T.textPrimary }} className="font-semibold">
+                <span style={{ color: T.textPrimary, fontWeight: 600 }}>
                   252.9 miles
                 </span>{' '}
                 &middot;{' '}
-                <span style={{ color: T.textPrimary }} className="font-semibold">
+                <span style={{ color: T.textPrimary, fontWeight: 600 }}>
                   40,667&apos; gain
                 </span>
               </p>
             </div>
-            <div className="flex gap-3">
+            <div style={{ display: 'flex', gap: 12 }}>
               {[
                 { v: '125h', l: 'Cutoff' },
                 { v: '27', l: 'Aid Stations' },
               ].map(({ v, l }) => (
                 <div
                   key={l}
-                  className="text-center rounded-xl px-4 py-3"
-                  style={{ background: T.cardBg, border: `1px solid ${T.cardBorder}` }}
+                  style={{
+                    textAlign: 'center',
+                    borderRadius: 12,
+                    padding: '12px 16px',
+                    background: T.cardBg,
+                    border: `1px solid ${T.cardBorder}`,
+                  }}
                 >
-                  <div className="text-2xl font-bold" style={{ color: T.accentLight, fontFamily: 'Georgia,serif' }}>
+                  <div
+                    style={{
+                      fontSize: '1.5rem',
+                      fontWeight: 700,
+                      color: T.accentLight,
+                      fontFamily: 'Georgia,serif',
+                    }}
+                  >
                     {v}
                   </div>
-                  <div className="text-xs uppercase tracking-wider mt-0.5 font-sans" style={{ color: T.textSecondary }}>
+                  <div
+                    style={{
+                      fontSize: '0.75rem',
+                      textTransform: 'uppercase',
+                      letterSpacing: '0.08em',
+                      marginTop: 2,
+                      fontFamily: "'Inter', sans-serif",
+                      color: T.textSecondary,
+                    }}
+                  >
                     {l}
                   </div>
                 </div>
@@ -156,27 +233,52 @@ export default function App() {
           </div>
 
           {/* Progress bar */}
-          <div className="mt-5 flex items-center gap-3 font-sans">
-            <span className="text-xs font-bold" style={{ color: T.green }}>
+          <div
+            style={{
+              marginTop: 20,
+              display: 'flex',
+              alignItems: 'center',
+              gap: 12,
+              fontFamily: "'Inter', sans-serif",
+            }}
+          >
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: T.green }}>
               START
             </span>
             <div
-              className="flex-1 h-2 rounded-full overflow-hidden"
-              style={{ background: 'rgba(160,120,60,0.35)', border: `1px solid ${T.cardBorder}` }}
+              style={{
+                flex: 1,
+                height: 8,
+                borderRadius: 9999,
+                overflow: 'hidden',
+                background: 'rgba(160,120,60,0.35)',
+                border: `1px solid ${T.cardBorder}`,
+              }}
             >
               <div
-                className="h-full rounded-full"
                 style={{
+                  height: '100%',
+                  borderRadius: 9999,
                   background: `linear-gradient(90deg, ${T.green}, ${T.accentLight}, ${T.accent})`,
                   width: '100%',
                 }}
               />
             </div>
-            <span className="text-xs font-bold" style={{ color: T.accentLight }}>
+            <span style={{ fontSize: '0.75rem', fontWeight: 700, color: T.accentLight }}>
               FINISH
             </span>
           </div>
-          <div className="flex justify-between text-xs font-sans mt-1 px-8" style={{ color: T.textSecondary }}>
+          <div
+            style={{
+              display: 'flex',
+              justifyContent: 'space-between',
+              fontSize: '0.75rem',
+              fontFamily: "'Inter', sans-serif",
+              marginTop: 4,
+              padding: '0 32px',
+              color: T.textSecondary,
+            }}
+          >
             <span>Mi 0 &middot; Deep Canyon Ranch</span>
             <span>Mi 252.9 &middot; Heritage Square</span>
           </div>
@@ -184,19 +286,38 @@ export default function App() {
 
         {/* Tabs */}
         <div
-          className={`flex gap-1 mb-6 p-1 rounded-xl overflow-x-auto font-sans transition-all duration-700 delay-100 ${mounted ? 'opacity-100' : 'opacity-0'}`}
-          style={{ background: 'rgba(180, 150, 90, 0.5)', border: `1px solid ${T.cardBorder}` }}
+          style={{
+            display: 'flex',
+            gap: 4,
+            marginBottom: 24,
+            padding: 4,
+            borderRadius: 12,
+            overflowX: 'auto',
+            fontFamily: "'Inter', sans-serif",
+            transition: 'opacity 0.7s 0.1s',
+            opacity: mounted ? 1 : 0,
+            background: 'rgba(180, 150, 90, 0.5)',
+            border: `1px solid ${T.cardBorder}`,
+          }}
         >
           {TABS.map((tab) => (
             <button
               key={tab}
               onClick={() => setActiveTab(tab)}
-              className="px-3 py-1.5 rounded-lg text-xs font-bold tracking-wide whitespace-nowrap transition-all duration-150"
-              style={
-                activeTab === tab
+              style={{
+                padding: '6px 12px',
+                borderRadius: 8,
+                fontSize: '0.75rem',
+                fontWeight: 700,
+                letterSpacing: '0.03em',
+                whiteSpace: 'nowrap',
+                transition: 'all 0.15s',
+                border: 'none',
+                cursor: 'pointer',
+                ...(activeTab === tab
                   ? { background: T.accent, color: '#f5efe0' }
-                  : { color: T.textPrimary, background: 'transparent' }
-              }
+                  : { color: T.textPrimary, background: 'transparent' }),
+              }}
             >
               {tab}
             </button>
@@ -204,7 +325,7 @@ export default function App() {
         </div>
 
         {/* Tab content */}
-        <div className="min-h-[300px]">
+        <div style={{ minHeight: 300 }}>
           {activeTab === 'Map' && (
             <div>
               <MapTab
@@ -260,8 +381,16 @@ export default function App() {
         </div>
 
         {/* Footer */}
-        <div className="mt-10 pt-4 text-center font-sans" style={{ borderTop: `1px solid ${T.cardBorder}` }}>
-          <p className="text-sm" style={{ color: T.textSecondary }}>
+        <div
+          style={{
+            marginTop: 40,
+            paddingTop: 16,
+            textAlign: 'center',
+            fontFamily: "'Inter', sans-serif",
+            borderTop: `1px solid ${T.cardBorder}`,
+          }}
+        >
+          <p style={{ fontSize: '0.875rem', color: T.textSecondary }}>
             Cocodona 250 &middot; May 4&ndash;9, 2026 &middot; Organized by{' '}
             <span style={{ color: T.textPrimary, fontWeight: 600 }}>Aravaipa Running</span>
           </p>
