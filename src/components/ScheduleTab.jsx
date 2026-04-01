@@ -17,10 +17,13 @@ const SHUTTLES = [
 
 export default function ScheduleTab() {
   return (
-    <div className="max-w-2xl font-sans">
+    <div style={{ fontFamily: "'Inter', sans-serif" }}>
       <div
-        className="mb-4 p-3 rounded-xl text-sm"
         style={{
+          marginBottom: 16,
+          padding: 12,
+          borderRadius: 12,
+          fontSize: '0.875rem',
           background: 'rgba(176,100,30,0.15)',
           border: `1px solid ${T.accentLight}60`,
           color: T.textPrimary,
@@ -31,25 +34,27 @@ export default function ScheduleTab() {
       </div>
 
       {SCHEDULE.map(({ day, events }) => (
-        <div key={day} className="mb-6">
+        <div key={day} style={{ marginBottom: 24 }}>
           <SectionLabel>{day}</SectionLabel>
-          <div className="space-y-2">
+          <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
             {events.map((ev, i) => (
               <div
                 key={i}
-                className="flex gap-3 rounded-lg px-3 py-2.5"
                 style={{
+                  display: 'flex',
+                  gap: 12,
+                  borderRadius: 8,
+                  padding: '10px 12px',
                   background: T.cardBg,
                   border: `1px solid ${T.cardBorder}`,
                 }}
               >
                 <span
-                  style={{ color: T.accent }}
-                  className="mt-0.5 shrink-0"
+                  style={{ color: T.accent, flexShrink: 0, marginTop: 2 }}
                 >
                   &#x203A;
                 </span>
-                <span className="text-sm" style={{ color: T.textPrimary }}>
+                <span style={{ fontSize: '0.875rem', color: T.textPrimary }}>
                   {ev}
                 </span>
               </div>
@@ -59,51 +64,77 @@ export default function ScheduleTab() {
       ))}
 
       <div
-        className="mt-2 pt-5"
-        style={{ borderTop: `1px solid ${T.cardBorder}` }}
+        style={{
+          marginTop: 8,
+          paddingTop: 20,
+          borderTop: `1px solid ${T.cardBorder}`,
+        }}
       >
         <div
-          className="text-sm font-bold mb-3"
-          style={{ color: T.textPrimary }}
+          style={{
+            fontSize: '0.875rem',
+            fontWeight: 700,
+            marginBottom: 12,
+            color: T.textPrimary,
+          }}
         >
           Packet Pick-up
         </div>
-        <Card className="p-4 mb-5 space-y-2">
-          <p className="text-sm" style={{ color: T.textPrimary }}>
+        <Card style={{ padding: 16, marginBottom: 20 }}>
+          <p style={{ fontSize: '0.875rem', color: T.textPrimary, marginBottom: 8 }}>
             <strong style={{ color: T.accentLight }}>Sunday May 3:</strong>{' '}
             1&ndash;5 PM, Deep Canyon Ranch &mdash; All distances
           </p>
-          <p className="text-xs font-bold" style={{ color: T.red }}>
+          <p style={{ fontSize: '0.75rem', fontWeight: 700, color: T.red }}>
             &#x26A0; No race morning packet pick-up for any distance.
           </p>
         </Card>
 
         <div
-          className="text-sm font-bold mb-3"
-          style={{ color: T.textPrimary }}
+          style={{
+            fontSize: '0.875rem',
+            fontWeight: 700,
+            marginBottom: 12,
+            color: T.textPrimary,
+          }}
         >
           Runner Shuttles
         </div>
-        <div className="space-y-2">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {SHUTTLES.map(({ l, c, d }) => (
-            <Card key={l} className="px-3 py-2.5">
-              <div className="flex items-center justify-between">
+            <Card key={l} style={{ padding: '10px 12px' }}>
+              <div
+                style={{
+                  display: 'flex',
+                  alignItems: 'center',
+                  justifyContent: 'space-between',
+                }}
+              >
                 <span
-                  className="text-sm font-bold"
-                  style={{ color: T.textPrimary }}
+                  style={{
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: T.textPrimary,
+                  }}
                 >
                   {l}
                 </span>
                 <span
-                  className="text-sm font-bold"
-                  style={{ color: T.accentLight }}
+                  style={{
+                    fontSize: '0.875rem',
+                    fontWeight: 700,
+                    color: T.accentLight,
+                  }}
                 >
                   {c}
                 </span>
               </div>
               <div
-                className="text-xs mt-0.5"
-                style={{ color: T.textSecondary }}
+                style={{
+                  fontSize: '0.75rem',
+                  marginTop: 2,
+                  color: T.textSecondary,
+                }}
               >
                 {d}
               </div>
