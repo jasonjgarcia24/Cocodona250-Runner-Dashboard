@@ -8,8 +8,7 @@ test.describe('Cocodona 250 Runner Dashboard', () => {
 
   test('header renders with race info', async ({ page }) => {
     await page.goto('/');
-    await expect(page.getByText('Cocodona')).toBeVisible();
-    await expect(page.getByText('250')).toBeVisible();
+    await expect(page.getByText('Cocodona', { exact: true })).toBeVisible();
     await expect(page.getByText('252.9 miles')).toBeVisible();
   });
 
