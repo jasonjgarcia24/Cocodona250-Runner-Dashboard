@@ -1,6 +1,6 @@
 import { AID_STATIONS } from '../data/aidStations';
 import { SECTION_TERRAIN } from '../data/terrain';
-import { SECTION_WEATHER, estimateTemp, getWeatherForMile } from '../data/weather';
+import { estimateTemp, getWeatherForMile } from '../data/weather';
 
 /**
  * Race start time: Monday May 4, 2026 at 5:00 AM MST.
