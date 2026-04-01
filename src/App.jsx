@@ -1,8 +1,9 @@
 import { useState, useEffect } from 'react';
 import { T, TOPO_PATTERN, GRAIN } from './tokens';
 import { AID_STATIONS } from './data/aidStations';
-import { MapTab } from './components/MapTab';
-import { ElevationProfile } from './components/ElevationProfile';
+import RaceSummaryTab from './components/RaceSummaryTab';
+import PacingTab from './components/PacingTab';
+import { DEFAULT_RUNNER_PROFILE } from './pacing/engine';
 
 const TABS = ['Map', 'Aid Stations', 'Race Summary', 'Schedule', 'Required Gear', 'Key Rules', 'Course Info', 'Pacing'];
 
@@ -14,6 +15,7 @@ export default function App() {
   const [mounted, setMounted] = useState(false);
   const [hoveredMile, setHoveredMile] = useState(null);
   const [plans, setPlans] = useState({});
+  const [runnerProfile, setRunnerProfile] = useState(DEFAULT_RUNNER_PROFILE);
   const [saveStatus, setSaveStatus] = useState('idle');
 
   useEffect(() => {
@@ -24,10 +26,17 @@ export default function App() {
     } catch (_) {
       // No saved plans — start fresh
     }
+    try {
+      const savedProfile = localStorage.getItem('cocodona250:runnerProfile');
+      if (savedProfile) setRunnerProfile(JSON.parse(savedProfile));
+    } catch (_) {
+      // No saved profile — start fresh
+    }
   }, []);
 
   useEffect(() => {
-    if (!mounted || Object.keys(plans).length === 0) return;
+    if (!mounted) return;
+    if (Object.keys(plans).length === 0) return;
     setSaveStatus('saving');
     const t = setTimeout(() => {
       try {
@@ -40,6 +49,15 @@ export default function App() {
     }, 800);
     return () => clearTimeout(t);
   }, [plans, mounted]);
+
+  useEffect(() => {
+    if (!mounted) return;
+    try {
+      localStorage.setItem('cocodona250:runnerProfile', JSON.stringify(runnerProfile));
+    } catch (_) {
+      // Silently fail
+    }
+  }, [runnerProfile, mounted]);
 
   const handlePlanChange = (key, planData) => {
     setPlans((prev) => ({ ...prev, [key]: planData }));
@@ -176,23 +194,8 @@ export default function App() {
         {/* Tab content — placeholder panels until Phase 1 agents provide components */}
         <div className="min-h-[300px]">
           {activeTab === 'Map' && (
-            <div>
-              <MapTab
-                hoveredMile={hoveredMile}
-                onHoverMile={setHoveredMile}
-                onSelectStation={(i) => {
-                  setOpenIdx(i);
-                  setActiveTab('Aid Stations');
-                }}
-              />
-              <ElevationProfile
-                hoveredMile={hoveredMile}
-                onHoverMile={setHoveredMile}
-                onSelectStation={(i) => {
-                  setOpenIdx(i);
-                  setActiveTab('Aid Stations');
-                }}
-              />
+            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
+              Map + Elevation Profile — coming in Phase 1
             </div>
           )}
 
@@ -203,9 +206,11 @@ export default function App() {
           )}
 
           {activeTab === 'Race Summary' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Race Summary Table — coming in Phase 1
-            </div>
+            <RaceSummaryTab
+              plans={plans}
+              onPlanChange={handlePlanChange}
+              runnerProfile={runnerProfile}
+            />
           )}
 
           {activeTab === 'Schedule' && (
@@ -233,9 +238,10 @@ export default function App() {
           )}
 
           {activeTab === 'Pacing' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Pacing Engine — coming in Phase 1
-            </div>
+            <PacingTab
+              runnerProfile={runnerProfile}
+              onProfileChange={setRunnerProfile}
+            />
           )}
         </div>
 
