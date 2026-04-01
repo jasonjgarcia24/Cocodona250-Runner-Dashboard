@@ -500,7 +500,7 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
                   fill={T.textMuted}
                   style={{ fontFamily: 'sans-serif' }}
                 >
-                  {(el / 1000).toFixed(0)}k
+                  {el % 1000 === 0 ? `${el / 1000}k` : `${(el / 1000).toFixed(1)}k`}
                 </text>
               </g>
             );
