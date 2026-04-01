@@ -1,9 +1,13 @@
 import { T } from '../tokens';
 
-export const Card = ({ children, className = '' }) => (
+export const Card = ({ children, style = {} }) => (
   <div
-    className={`rounded-xl ${className}`}
-    style={{ background: T.cardBg, border: `1px solid ${T.cardBorder}` }}
+    style={{
+      borderRadius: 12,
+      background: T.cardBg,
+      border: `1px solid ${T.cardBorder}`,
+      ...style,
+    }}
   >
     {children}
   </div>
@@ -11,8 +15,15 @@ export const Card = ({ children, className = '' }) => (
 
 export const SectionLabel = ({ children }) => (
   <div
-    className="text-xs font-bold tracking-widest uppercase mb-3 font-sans"
-    style={{ color: T.accentLight }}
+    style={{
+      fontSize: '0.75rem',
+      fontWeight: 700,
+      letterSpacing: '0.1em',
+      textTransform: 'uppercase',
+      marginBottom: 12,
+      fontFamily: "'Inter', sans-serif",
+      color: T.accentLight,
+    }}
   >
     {children}
   </div>
