@@ -3,7 +3,12 @@
     "PostToolUse": [
       {
         "matcher": "Edit|Write",
-        "command": "bash .claude/scripts/auto-commit.sh"
+        "hooks": [
+          {
+            "type": "command",
+            "command": "bash .claude/scripts/auto-commit.sh"
+          }
+        ]
       }
     ]
   }
