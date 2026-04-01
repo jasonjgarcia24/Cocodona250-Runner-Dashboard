@@ -214,14 +214,13 @@ export const MapTab = ({ hoveredMile, onHoverMile, onSelectStation }) => {
     hoverMarkerRef.current = hoverMarker;
 
     // Hover tooltip
-    const hoverTooltip = L.tooltip({
+    hoverTooltipRef.current = L.tooltip({
       permanent: true,
       direction: 'right',
       offset: [10, 0],
       className: 'hover-tooltip',
       opacity: 0.95,
     });
-    hoverTooltipRef.current = hoverTooltip;
 
     // Scale bar
     L.control.scale({ imperial: true, metric: true, position: 'bottomleft' }).addTo(map);
