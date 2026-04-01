@@ -83,7 +83,7 @@ test.describe('Cocodona 250 Runner Dashboard', () => {
     await page.getByRole('button', { name: 'Pacing', exact: true }).click();
     // Look for the input fields (Base Pace, Target Finish, Pack Weight)
     await expect(page.locator('input[type="number"]').first()).toBeVisible({ timeout: 5000 });
-    await expect(page.getByText('Base Pace')).toBeVisible();
+    await expect(page.getByText('Base Pace', { exact: true }).first()).toBeVisible();
   });
 
   test('Race Summary tab renders a table', async ({ page }) => {
