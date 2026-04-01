@@ -75,6 +75,7 @@ const PAD_B = 40;
 export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) => {
   const [hoveredStation, setHoveredStation] = useState(null);
   const svgRef = useRef(null);
+  const containerRef = useRef(null);
   const isPanning = useRef(false);
   const panStart = useRef({ x: 0, viewStart: 0 });
 
