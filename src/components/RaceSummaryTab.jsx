@@ -1,6 +1,6 @@
 import { useState, useMemo, useCallback } from 'react';
 import { T } from '../tokens';
-import { Card, SectionLabel } from './Card';
+import { SectionLabel } from './Card';
 import { Icon } from './Icon';
 import { calculatePacing, formatDuration, formatTime, formatPace, getProjectedFinishHours, getCutoffWarnings } from '../pacing/engine';
 import { downloadBackupCSV } from '../export/csvExport';
