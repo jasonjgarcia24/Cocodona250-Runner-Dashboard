@@ -765,24 +765,47 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
         </svg>
       </div>
 
-      {/* Footer hints */}
+      {/* Controls bar */}
       <div
         style={{
           display: 'flex',
           flexWrap: 'wrap',
-          gap: '16px',
+          gap: '12px',
           marginTop: '8px',
           fontSize: '12px',
           fontFamily: "'Inter', sans-serif",
           color: T.textMuted,
-          fontStyle: 'italic',
           padding: '0 4px',
+          alignItems: 'center',
         }}
       >
-        <span>Hover for elevation</span>
-        <span>Scroll to zoom</span>
-        <span>Drag to pan</span>
-        <span>Click station markers for details</span>
+        <select
+          value=""
+          onChange={(e) => {
+            const idx = parseInt(e.target.value, 10);
+            if (!isNaN(idx)) zoomToStation(idx);
+          }}
+          style={{
+            padding: '4px 8px',
+            borderRadius: 6,
+            border: `1px solid ${T.cardBorder}`,
+            background: 'rgba(210,185,130,0.8)',
+            fontSize: 11,
+            fontFamily: "'Inter', sans-serif",
+            color: T.textPrimary,
+            cursor: 'pointer',
+          }}
+        >
+          <option value="">Zoom to station...</option>
+          {AID_STATIONS.map((s, i) => (
+            <option key={`${s.mile}-${i}`} value={i}>
+              Mi {s.mile} — {s.name}
+            </option>
+          ))}
+        </select>
+        <span style={{ fontStyle: 'italic' }}>Scroll to zoom</span>
+        <span style={{ fontStyle: 'italic' }}>Drag to pan</span>
+        <span style={{ fontStyle: 'italic' }}>Click station dot to zoom in</span>
       </div>
     </div>
   );
