@@ -132,7 +132,8 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
   // Dynamic Y-axis ticks
   const yTicks = useMemo(() => {
     const ticks = [];
-    for (let el = 2000; el <= 8000; el += 1000) {
+    const roundedMax = Math.ceil(ELEV_MAX / 1000) * 1000;
+    for (let el = 2000; el <= roundedMax; el += 1000) {
       if (el >= ELEV_MIN && el <= ELEV_MAX) ticks.push(el);
     }
     return ticks;
