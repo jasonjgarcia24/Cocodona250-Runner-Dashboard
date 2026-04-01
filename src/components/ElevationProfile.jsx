@@ -200,10 +200,11 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
     () =>
       [
         { mile: 36.6, label: 'Crown King', dy: -8 },
-        { mile: 110, label: 'Mingus Mtn', dy: -8 },
+        { mile: 106.7, label: 'Mingus Mtn', dy: -8 },
         { mile: 132.5, label: 'Verde Valley', dy: 14 },
-        { mile: 175.7, label: 'Schnebly Hill', dy: -8 },
-        { mile: 241.5, label: 'Elden Mtn', dy: -8 },
+        { mile: 158.7, label: 'Sedona', dy: 14 },
+        { mile: 175.6, label: 'Schnebly Hill', dy: -8 },
+        { mile: 241, label: 'Elden Mtn', dy: -8 },
         { mile: 252.9, label: 'Flagstaff', dy: 14 },
       ].filter((lm) => lm.mile >= viewStart && lm.mile <= viewEnd),
     [viewStart, viewEnd],
