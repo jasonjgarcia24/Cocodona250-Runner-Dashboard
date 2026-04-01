@@ -280,9 +280,30 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
     [getSvgX, xToMile, viewSpan, chartW],
   );
 
+  // Attach wheel listener as non-passive so preventDefault() works
+  useEffect(() => {
+    const el = containerRef.current;
+    if (!el) return;
+    const handler = (e) => handleWheel(e);
+    el.addEventListener('wheel', handler, { passive: false });
+    return () => el.removeEventListener('wheel', handler);
+  }, [handleWheel]);
+
   // Reset zoom
   const handleResetZoom = useCallback(() => {
     setViewRange({ start: 0, end: TOTAL_MILES });
+  }, []);
+
+  // Zoom to a specific station range (previous station → next station with padding)
+  const zoomToStation = useCallback((stationIdx) => {
+    const prevMile = stationIdx > 0 ? AID_STATIONS[stationIdx - 1].mile : 0;
+    const nextMile = stationIdx < AID_STATIONS.length - 1
+      ? AID_STATIONS[stationIdx + 1].mile
+      : TOTAL_MILES;
+    const padding = (nextMile - prevMile) * 0.1;
+    const start = Math.max(0, prevMile - padding);
+    const end = Math.min(TOTAL_MILES, nextMile + padding);
+    setViewRange({ start, end });
   }, []);
 
   // Cursor from hoveredMile
