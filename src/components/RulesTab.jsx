@@ -59,22 +59,30 @@ const COLOR_CONFIG = {
 
 export default function RulesTab() {
   return (
-    <div className="max-w-2xl space-y-3 font-sans">
+    <div style={{ display: 'flex', flexDirection: 'column', gap: 12, fontFamily: "'Inter', sans-serif" }}>
       {RULES.map(({ t, c, b }) => {
         const cfg = COLOR_CONFIG[c];
         return (
           <div
             key={t}
-            className="rounded-xl px-4 py-3"
-            style={{ background: cfg.bg, border: `1px solid ${cfg.border}` }}
+            style={{
+              borderRadius: 12,
+              padding: '12px 16px',
+              background: cfg.bg,
+              border: `1px solid ${cfg.border}`,
+            }}
           >
             <div
-              className="text-sm font-bold mb-1"
-              style={{ color: cfg.title }}
+              style={{
+                fontSize: '0.875rem',
+                fontWeight: 700,
+                marginBottom: 4,
+                color: cfg.title,
+              }}
             >
               {t}
             </div>
-            <p className="text-sm" style={{ color: T.textPrimary }}>
+            <p style={{ fontSize: '0.875rem', color: T.textPrimary, lineHeight: 1.5 }}>
               {b}
             </p>
           </div>
