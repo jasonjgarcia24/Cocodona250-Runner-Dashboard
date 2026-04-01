@@ -74,7 +74,7 @@ test.describe('Cocodona 250 Runner Dashboard', () => {
   test('Course Info tab shows course stats', async ({ page }) => {
     await page.goto('/');
     await page.getByRole('button', { name: 'Course Info', exact: true }).click();
-    await expect(page.getByText('252.9')).toBeVisible();
+    await expect(page.getByText('252.9', { exact: true })).toBeVisible();
     await expect(page.getByText("40,667'")).toBeVisible();
   });
 
