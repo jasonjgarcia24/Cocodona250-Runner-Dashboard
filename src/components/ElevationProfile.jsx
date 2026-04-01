@@ -89,6 +89,32 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
   const viewEnd = viewRange.end;
   const viewSpan = viewEnd - viewStart;
 
+  // Dynamic Y-axis range based on visible elevation data
+  const { viewElevMin, viewElevMax } = useMemo(() => {
+    const visiblePts = ELEV_PTS.filter(([m]) => m >= viewStart && m <= viewEnd);
+    if (visiblePts.length === 0) return { viewElevMin: ELEV_MIN, viewElevMax: ELEV_MAX };
+
+    let min = Infinity, max = -Infinity;
+    for (const [, e] of visiblePts) {
+      if (e < min) min = e;
+      if (e > max) max = e;
+    }
+
+    // Include interpolated endpoints
+    const startElev = interpElev(viewStart);
+    const endElev = interpElev(viewEnd);
+    min = Math.min(min, startElev, endElev);
+    max = Math.max(max, startElev, endElev);
+
+    const range = max - min;
+    const padding = Math.max(range * 0.15, 200);
+
+    return {
+      viewElevMin: Math.floor((min - padding) / 100) * 100,
+      viewElevMax: Math.ceil((max + padding) / 100) * 100,
+    };
+  }, [viewStart, viewEnd]);
+
   // Coordinate transforms for the current view
   const mileToX = useCallback(
     (m) => PAD_L + ((m - viewStart) / viewSpan) * chartW,
@@ -96,8 +122,8 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
   );
 
   const elevToY = useCallback(
-    (el) => PAD_T + (1 - (el - ELEV_MIN) / (ELEV_MAX - ELEV_MIN)) * chartH,
-    [chartH],
+    (el) => PAD_T + (1 - (el - viewElevMin) / (viewElevMax - viewElevMin)) * chartH,
+    [chartH, viewElevMin, viewElevMax],
   );
 
   const xToMile = useCallback(
