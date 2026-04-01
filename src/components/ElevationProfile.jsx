@@ -408,6 +408,7 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
 
       {/* Chart container */}
       <div
+        ref={containerRef}
         style={{
           borderRadius: '12px',
           overflow: 'hidden',
@@ -425,7 +426,6 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
           onMouseDown={handleMouseDown}
           onMouseUp={handleMouseUp}
           onMouseLeave={handleMouseLeave}
-          onWheel={handleWheel}
         >
           {/* Gradient definitions */}
           <defs>
