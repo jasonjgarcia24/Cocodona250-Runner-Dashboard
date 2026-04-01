@@ -31,26 +31,44 @@ const ELEVATION_RANGES = [
 
 export default function CourseInfoTab() {
   return (
-    <div className="max-w-2xl space-y-6 font-sans">
-      <div className="grid grid-cols-2 sm:grid-cols-4 gap-3">
+    <div style={{ fontFamily: "'Inter', sans-serif" }}>
+      <div
+        style={{
+          display: 'grid',
+          gridTemplateColumns: 'repeat(4, 1fr)',
+          gap: 12,
+          marginBottom: 24,
+        }}
+      >
         {STATS.map(({ l, v }) => (
           <div
             key={l}
-            className="rounded-xl p-3 text-center"
             style={{
+              borderRadius: 12,
+              padding: 12,
+              textAlign: 'center',
               background: T.cardBg,
               border: `1px solid ${T.cardBorder}`,
             }}
           >
             <div
-              className="text-xl font-bold"
-              style={{ color: T.accentLight, fontFamily: 'Georgia,serif' }}
+              style={{
+                fontSize: '1.25rem',
+                fontWeight: 700,
+                color: T.accentLight,
+                fontFamily: 'Georgia,serif',
+              }}
             >
               {v}
             </div>
             <div
-              className="text-xs uppercase tracking-wider mt-1"
-              style={{ color: T.textSecondary }}
+              style={{
+                fontSize: '0.75rem',
+                textTransform: 'uppercase',
+                letterSpacing: '0.08em',
+                marginTop: 4,
+                color: T.textSecondary,
+              }}
             >
               {l}
             </div>
@@ -58,12 +76,18 @@ export default function CourseInfoTab() {
         ))}
       </div>
 
-      <div>
+      <div style={{ marginBottom: 24 }}>
         <SectionLabel>The Journey</SectionLabel>
-        <Card className="p-4">
+        <Card style={{ padding: 16 }}>
           <div
-            className="text-sm space-y-3 leading-relaxed"
-            style={{ color: T.textPrimary }}
+            style={{
+              fontSize: '0.875rem',
+              lineHeight: 1.7,
+              color: T.textPrimary,
+              display: 'flex',
+              flexDirection: 'column',
+              gap: 12,
+            }}
           >
             <p>
               Starting in the{' '}
@@ -100,32 +124,44 @@ export default function CourseInfoTab() {
         </Card>
       </div>
 
-      <div>
+      <div style={{ marginBottom: 24 }}>
         <SectionLabel>Elevation Range</SectionLabel>
-        <div className="space-y-2">
+        <div style={{ display: 'flex', flexDirection: 'column', gap: 8 }}>
           {ELEVATION_RANGES.map(({ l, r, n, c }) => (
             <div
               key={l}
-              className="flex items-center gap-3 rounded-lg px-3 py-2.5"
               style={{
+                display: 'flex',
+                alignItems: 'center',
+                gap: 12,
+                borderRadius: 8,
+                padding: '10px 12px',
                 background: T.cardBg,
                 border: `1px solid ${T.cardBorder}`,
               }}
             >
               <div
-                className="font-bold font-mono text-sm shrink-0"
-                style={{ color: c }}
+                style={{
+                  fontWeight: 700,
+                  fontFamily: "ui-monospace, 'Cascadia Code', monospace",
+                  fontSize: '0.875rem',
+                  flexShrink: 0,
+                  color: c,
+                }}
               >
                 {r}
               </div>
               <div>
                 <div
-                  className="text-sm font-semibold"
-                  style={{ color: T.textPrimary }}
+                  style={{
+                    fontSize: '0.875rem',
+                    fontWeight: 600,
+                    color: T.textPrimary,
+                  }}
                 >
                   {l}
                 </div>
-                <div className="text-xs" style={{ color: T.textSecondary }}>
+                <div style={{ fontSize: '0.75rem', color: T.textSecondary }}>
                   {n}
                 </div>
               </div>
@@ -134,13 +170,17 @@ export default function CourseInfoTab() {
         </div>
       </div>
 
-      <div>
+      <div style={{ marginBottom: 24 }}>
         <SectionLabel>Western States Qualifier</SectionLabel>
         <div
-          className="rounded-xl p-4"
-          style={{ background: T.greenDark, border: `1px solid ${T.green}50` }}
+          style={{
+            borderRadius: 12,
+            padding: 16,
+            background: T.greenDark,
+            border: `1px solid ${T.green}50`,
+          }}
         >
-          <p className="text-sm" style={{ color: T.textPrimary }}>
+          <p style={{ fontSize: '0.875rem', color: T.textPrimary }}>
             Completing within the 125-hour cutoff earns an automatic qualifier
             for the{' '}
             <strong style={{ color: T.green }}>
@@ -149,8 +189,11 @@ export default function CourseInfoTab() {
             . No submission required &mdash; it&apos;s automatic.
           </p>
           <p
-            className="mt-2 text-xs"
-            style={{ color: T.textSecondary }}
+            style={{
+              marginTop: 8,
+              fontSize: '0.75rem',
+              color: T.textSecondary,
+            }}
           >
             ITRA and UTMB points also awarded automatically within 60 days of
             the race.
@@ -161,20 +204,30 @@ export default function CourseInfoTab() {
       <div>
         <SectionLabel>Emergency Contact</SectionLabel>
         <div
-          className="rounded-xl p-4 text-center"
-          style={{ background: T.redDark, border: `1px solid ${T.red}60` }}
+          style={{
+            borderRadius: 12,
+            padding: 16,
+            textAlign: 'center',
+            background: T.redDark,
+            border: `1px solid ${T.red}60`,
+          }}
         >
           <div
-            className="text-xl font-bold font-mono tracking-wide"
-            style={{ color: T.red }}
+            style={{
+              fontSize: '1.25rem',
+              fontWeight: 700,
+              fontFamily: "ui-monospace, 'Cascadia Code', monospace",
+              letterSpacing: '0.08em',
+              color: T.red,
+            }}
           >
             (602) 830-4526
           </div>
-          <div className="text-sm mt-1" style={{ color: T.textPrimary }}>
+          <div style={{ fontSize: '0.875rem', marginTop: 4, color: T.textPrimary }}>
             TEXT ONLY &mdash; Race Command. Program into your phone before race
             day.
           </div>
-          <div className="text-xs mt-1" style={{ color: T.textSecondary }}>
+          <div style={{ fontSize: '0.75rem', marginTop: 4, color: T.textSecondary }}>
             Provide bib number, location, and description of the issue.
           </div>
         </div>
