@@ -1,7 +1,14 @@
-import { useState, useEffect } from 'react';
+import { useState, useEffect, useCallback } from 'react';
 import { T, TOPO_PATTERN, GRAIN } from './tokens';
 import { AID_STATIONS } from './data/aidStations';
+import MapTab from './components/MapTab';
+import ElevationProfile from './components/ElevationProfile';
+import { AidStationsTab } from './components/AidStationsTab';
 import RaceSummaryTab from './components/RaceSummaryTab';
+import ScheduleTab from './components/ScheduleTab';
+import GearTab from './components/GearTab';
+import RulesTab from './components/RulesTab';
+import CourseInfoTab from './components/CourseInfoTab';
 import PacingTab from './components/PacingTab';
 import { DEFAULT_RUNNER_PROFILE } from './pacing/engine';
 
@@ -62,6 +69,11 @@ export default function App() {
   const handlePlanChange = (key, planData) => {
     setPlans((prev) => ({ ...prev, [key]: planData }));
   };
+
+  const handleSelectStation = useCallback((idx) => {
+    setActiveTab('Aid Stations');
+    setOpenIdx(idx);
+  }, []);
 
   const filteredStations = AID_STATIONS.filter((s) => {
     if (search && !s.name.toLowerCase().includes(search.toLowerCase())) return false;
@@ -191,18 +203,36 @@ export default function App() {
           ))}
         </div>
 
-        {/* Tab content — placeholder panels until Phase 1 agents provide components */}
+        {/* Tab content */}
         <div className="min-h-[300px]">
           {activeTab === 'Map' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Map + Elevation Profile — coming in Phase 1
+            <div>
+              <MapTab
+                hoveredMile={hoveredMile}
+                onHoverMile={setHoveredMile}
+                onSelectStation={handleSelectStation}
+              />
+              <ElevationProfile
+                hoveredMile={hoveredMile}
+                onHoverMile={setHoveredMile}
+                onSelectStation={handleSelectStation}
+              />
             </div>
           )}
 
           {activeTab === 'Aid Stations' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Aid Stations — coming in Phase 1
-            </div>
+            <AidStationsTab
+              plans={plans}
+              onPlanChange={handlePlanChange}
+              openIdx={openIdx}
+              onOpenIdx={setOpenIdx}
+              filter={filter}
+              onFilterChange={setFilter}
+              search={search}
+              onSearchChange={setSearch}
+              saveStatus={saveStatus}
+              filteredStations={filteredStations}
+            />
           )}
 
           {activeTab === 'Race Summary' && (
@@ -213,29 +243,13 @@ export default function App() {
             />
           )}
 
-          {activeTab === 'Schedule' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Schedule — coming in Phase 1
-            </div>
-          )}
+          {activeTab === 'Schedule' && <ScheduleTab />}
 
-          {activeTab === 'Required Gear' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Required Gear — coming in Phase 1
-            </div>
-          )}
+          {activeTab === 'Required Gear' && <GearTab />}
 
-          {activeTab === 'Key Rules' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Key Rules — coming in Phase 1
-            </div>
-          )}
+          {activeTab === 'Key Rules' && <RulesTab />}
 
-          {activeTab === 'Course Info' && (
-            <div className="text-center py-20 font-sans" style={{ color: T.textMuted }}>
-              Course Info — coming in Phase 1
-            </div>
-          )}
+          {activeTab === 'Course Info' && <CourseInfoTab />}
 
           {activeTab === 'Pacing' && (
             <PacingTab
