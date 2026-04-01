@@ -1,1 +1,35 @@
-@import "tailwindcss";
+/* Minimal reset — no framework, no interference with Leaflet */
+*, *::before, *::after {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+html {
+  line-height: 1.5;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+input, button, textarea, select {
+  font: inherit;
+}
+
+button {
+  cursor: pointer;
+  border: none;
+  background: none;
+}
+
+/* Scrollbar for overflow containers */
+::-webkit-scrollbar {
+  height: 6px;
+  width: 6px;
+}
+::-webkit-scrollbar-track {
+  background: rgba(140, 95, 45, 0.1);
+}
+::-webkit-scrollbar-thumb {
+  background: rgba(140, 95, 45, 0.3);
+  border-radius: 3px;
+}
