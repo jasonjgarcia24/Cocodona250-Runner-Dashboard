@@ -237,7 +237,6 @@ export const MapTab = ({ hoveredMile, onHoverMile, onSelectStation }) => {
   useEffect(() => {
     const map = mapInstanceRef.current;
     const hoverMarker = hoverMarkerRef.current;
-    const hoverTooltip = hoverTooltipRef.current;
     if (!map || !hoverMarker) return;
 
     if (hoveredMile != null) {
