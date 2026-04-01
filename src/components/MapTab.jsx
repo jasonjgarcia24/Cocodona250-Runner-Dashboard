@@ -60,7 +60,7 @@ export const MapTab = ({ hoveredMile, onHoverMile, onSelectStation }) => {
   const hoverMarkerRef = useRef(null);
   const hoverTooltipRef = useRef(null);
   const stationMarkersRef = useRef([]);
-  const [tooltip, setTooltip] = useState(null);
+  const [_tooltip, setTooltip] = useState(null);
 
   // Initialize Leaflet map
   useEffect(() => {
