@@ -131,23 +131,31 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
     [viewStart, viewSpan, chartW],
   );
 
-  // Build SVG path — tension adapts to zoom level (jagged when zoomed in, smooth when out)
+  // Build SVG path using Catmull-Rom splines (smooth through all points at any zoom)
   const { pathD, fillD } = useMemo(() => {
     const visiblePts = ELEV_PTS.filter(([m]) => m >= viewStart - 5 && m <= viewEnd + 5);
     const pts = visiblePts.map(([m, e]) => ({ x: mileToX(m), y: elevToY(e) }));
     if (pts.length < 2) return { pathD: '', fillD: '' };
 
-    // Smooth when zoomed out, angular when zoomed in
-    const zoomRatio = TOTAL_MILES / viewSpan;
-    const tension = zoomRatio <= 1.5 ? 0.35 : zoomRatio <= 5 ? 0.2 : 0.1;
+    // Catmull-Rom to cubic bezier conversion (alpha=0.5 centripetal)
+    const catmullToBezier = (p0, p1, p2, p3) => {
+      const t = 1 / 6;
+      return {
+        cp1x: p1.x + (p2.x - p0.x) * t,
+        cp1y: p1.y + (p2.y - p0.y) * t,
+        cp2x: p2.x - (p3.x - p1.x) * t,
+        cp2y: p2.y - (p3.y - p1.y) * t,
+      };
+    };
 
     let d = `M ${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
-    for (let i = 1; i < pts.length; i++) {
-      const prev = pts[i - 1];
-      const curr = pts[i];
-      const cp1x = prev.x + (curr.x - prev.x) * tension;
-      const cp2x = curr.x - (curr.x - prev.x) * tension;
-      d += ` C ${cp1x.toFixed(1)},${prev.y.toFixed(1)} ${cp2x.toFixed(1)},${curr.y.toFixed(1)} ${curr.x.toFixed(1)},${curr.y.toFixed(1)}`;
+    for (let i = 0; i < pts.length - 1; i++) {
+      const p0 = pts[Math.max(0, i - 1)];
+      const p1 = pts[i];
+      const p2 = pts[i + 1];
+      const p3 = pts[Math.min(pts.length - 1, i + 2)];
+      const { cp1x, cp1y, cp2x, cp2y } = catmullToBezier(p0, p1, p2, p3);
+      d += ` C ${cp1x.toFixed(1)},${cp1y.toFixed(1)} ${cp2x.toFixed(1)},${cp2y.toFixed(1)} ${p2.x.toFixed(1)},${p2.y.toFixed(1)}`;
     }
 
     const lastPt = pts[pts.length - 1];
@@ -157,7 +165,7 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
       ` L ${lastPt.x.toFixed(1)},${(PAD_T + chartH).toFixed(1)} L ${firstPt.x.toFixed(1)},${(PAD_T + chartH).toFixed(1)} Z`;
 
     return { pathD: d, fillD: fill };
-  }, [viewStart, viewEnd, viewSpan, mileToX, elevToY, chartH]);
+  }, [viewStart, viewEnd, mileToX, elevToY, chartH]);
 
   // Dynamic Y-axis ticks based on visible elevation range
   const yTicks = useMemo(() => {
