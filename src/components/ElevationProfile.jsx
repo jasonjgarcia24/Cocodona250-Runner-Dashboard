@@ -131,18 +131,22 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
     [viewStart, viewSpan, chartW],
   );
 
-  // Build smooth SVG path using cubic bezier
+  // Build SVG path — tension adapts to zoom level (jagged when zoomed in, smooth when out)
   const { pathD, fillD } = useMemo(() => {
     const visiblePts = ELEV_PTS.filter(([m]) => m >= viewStart - 5 && m <= viewEnd + 5);
     const pts = visiblePts.map(([m, e]) => ({ x: mileToX(m), y: elevToY(e) }));
     if (pts.length < 2) return { pathD: '', fillD: '' };
 
+    // Smooth when zoomed out, angular when zoomed in
+    const zoomRatio = TOTAL_MILES / viewSpan;
+    const tension = zoomRatio <= 1.5 ? 0.35 : zoomRatio <= 5 ? 0.2 : 0.1;
+
     let d = `M ${pts[0].x.toFixed(1)},${pts[0].y.toFixed(1)}`;
     for (let i = 1; i < pts.length; i++) {
       const prev = pts[i - 1];
       const curr = pts[i];
-      const cp1x = prev.x + (curr.x - prev.x) * 0.4;
-      const cp2x = curr.x - (curr.x - prev.x) * 0.4;
+      const cp1x = prev.x + (curr.x - prev.x) * tension;
+      const cp2x = curr.x - (curr.x - prev.x) * tension;
       d += ` C ${cp1x.toFixed(1)},${prev.y.toFixed(1)} ${cp2x.toFixed(1)},${curr.y.toFixed(1)} ${curr.x.toFixed(1)},${curr.y.toFixed(1)}`;
     }
 
@@ -153,7 +157,7 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
       ` L ${lastPt.x.toFixed(1)},${(PAD_T + chartH).toFixed(1)} L ${firstPt.x.toFixed(1)},${(PAD_T + chartH).toFixed(1)} Z`;
 
     return { pathD: d, fillD: fill };
-  }, [viewStart, viewEnd, mileToX, elevToY, chartH]);
+  }, [viewStart, viewEnd, viewSpan, mileToX, elevToY, chartH]);
 
   // Dynamic Y-axis ticks based on visible elevation range
   const yTicks = useMemo(() => {
