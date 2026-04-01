@@ -613,7 +613,8 @@ export const ElevationProfile = ({ hoveredMile, onHoverMile, onSelectStation }) 
                   style={{ cursor: 'pointer' }}
                   onMouseEnter={() => setHoveredStation(s.idx)}
                   onMouseLeave={() => setHoveredStation(null)}
-                  onClick={() => onSelectStation && onSelectStation(s.idx)}
+                  onClick={() => zoomToStation(s.idx)}
+                  onDoubleClick={() => onSelectStation && onSelectStation(s.idx)}
                 >
                   {/* Hit area */}
                   <circle cx={x} cy={y} r={10} fill="transparent" />
